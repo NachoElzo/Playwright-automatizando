@@ -1,8 +1,8 @@
-export const title = "Automation Practice Hub"
-export const subTitle = "Explore different automation tools and techniques"
+export const titleText = "Automation Practice Hub"
+export const subtitleText = "Explore different automation tools and techniques"
 
 
-export const cardsTitles = [
+export const cardsTitlesText = [
   "Inputs fields",
   "Dropdowns", 
   "Drag and drop",
@@ -22,7 +22,7 @@ export const cardsTitles = [
 
 const about = "Learn more about"
 
-export const cardsLabels = [
+export const cardsDescriptionsText = [
   `${about} Inputs fields.`,
   `${about} Dropdowns.`, 
   `${about} Drag and drop.`,

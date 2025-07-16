@@ -1,22 +1,47 @@
-import { test } from "../../../fixtures/test-fixtures";
+import { test, expect } from "../../../fixtures/test-fixtures";
+import { titleText, subtitleText, cardsTitlesText, cardsDescriptionsText } from "../../../data/home-page-data";
+import { HomePage } from "../../../fixtures/index";
 
-test.describe("Verify home page components", () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto("");
+// Forces tests to run sequentially in a single worker to share the same browser context and homepage instance
+test.describe.configure({ mode: 'serial' });
+
+test.describe("Verify home page components @regression", () => {
+  let homePage: HomePage;
+
+  test.beforeAll(async ({ newBrowser }) => {
+    // Navigate to home page in the test
+    await newBrowser.page.goto("");
+    // Use the shared browser context from fixture
+    homePage = newBrowser.homePage;
   });
 
-  test("Validate Home page title", async ({homePage}) =>{
-    await homePage.validateTitles()
-  })
-  test("Validate home page cards", async ({ homePage }) => {
-    await homePage.validateCards();
+  test("Validate title", async () => {
+    const { getTitle } = await homePage.getTitle();
+    expect(getTitle).toBe(titleText);
+  });
 
-    await test.step("Validate cards titles", async () => {
-      await homePage.validateCardsTitles();
-    });
+  test("Validate subtitle", async () => {
+    const { getSubTitle } = await homePage.getSubTitle();
+    expect(getSubTitle).toBe(subtitleText);
+  });
 
-    await test.step("Validate cards labels", async () => {
-      await homePage.validateCardsLabels();
-    });
+  test("Validate number of cards", async () => {
+    const cardsCount = await homePage.cardsCount();
+    expect(cardsCount).toBe(15);
+  });
+
+  test("Validates cards titles", async () => {
+    const cardsTitles = await homePage.getAllCardsTitles();
+    expect(cardsTitles).toEqual(cardsTitlesText);
+  });
+
+  test("Validates cards labels", async () => {
+    const cardsLabels = await homePage.getAllCardsDescriptions();
+    expect(cardsLabels).toEqual(cardsDescriptionsText);
+  });
+
+  test("Validate cards as link", async () => {
+    const cardsAreLinks = await homePage.getCardsAttribute();
+    expect(cardsAreLinks).toBe(true);
   });
 });
