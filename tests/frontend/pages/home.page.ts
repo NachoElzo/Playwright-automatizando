@@ -2,19 +2,18 @@ import { Page, Locator } from "@playwright/test";
 import PagesBase from "./pages-base.page";
 
 export default class HomePage extends PagesBase {
-  readonly title: Locator;
-  readonly subtitle: Locator;
   readonly cards: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.title = page.locator("h1");
-    this.subtitle = page.locator(".subtitle");
     this.cards = page.locator(".grid-container a");
   }
-
   async getTitle() {
-    return await super.getTitlesText("h1");
+    return await super.getTileText()
+  }
+
+  async getHeader() {
+    return await super.getHeaderText("h1");
   }
   async getSubTitle() {
     return await super.getSubTitlesText(".subtitle");
@@ -24,7 +23,7 @@ export default class HomePage extends PagesBase {
     const cardsCount = await this.cards.count()
     return cardsCount
   }
-  async getAllCardsTitles (){
+  async getAllCardsHeaders (){
     let cardsTitles = await this.cards.locator("h3").allTextContents()
     return cardsTitles
   }

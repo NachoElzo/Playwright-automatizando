@@ -7,15 +7,15 @@ export default abstract class PagesBase {
     this.page = page;
   }
 
-  async getTitlesText(titleSelector: string) {
-    return {
-      getTitle: await this.page.locator(titleSelector).innerText()
-    };
+  async getTileText() {
+    return await this.page.title()
   }
 
-  async getSubTitlesText (subTitleSelector: string){
-    return {
-      getSubTitle: await this.page.locator(subTitleSelector).innerText()
-    }  
+  async getHeaderText(headerSelector: string) {
+    return await this.page.locator(headerSelector).innerText();
+  }
+
+  async getSubTitlesText(subTitleSelector: string) {
+    return await this.page.locator(subTitleSelector).innerText();
   }
 }
