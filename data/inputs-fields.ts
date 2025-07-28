@@ -32,7 +32,13 @@ export const formElements = {
   ],
   errorLabels: {
     name: `Name ${lettersErrorPrefix}`,
-    lastName : `Last Name ${lettersErrorPrefix}`
+    lastName : `Last Name ${lettersErrorPrefix}`,
+    age: `Age must be between 1 and 150.`,
+    email: `Invalid email address.`,
+    phone1: `Phone must be between 9 and 12 digits.`,
+    phone2: `Phone must contain only numbers.`,
+    country: `Country ${lettersErrorPrefix}`,
+    city: `City ${lettersErrorPrefix}`
   }
 
 }
