@@ -1,57 +1,44 @@
-import { APIResponse, request } from "@playwright/test";
+import { APIResponse } from "@playwright/test";
+import { apiConfig } from "../../../../data/api-config";
+import post from '../requests/post';
 
 /**
  * Creates a new user account using the provided username and password.
  * @param userName - The name of the user to be registered
  * @param userPassword - The password of the user to be registered
- * @returns An object containing userId, userName, userPassword, token, and the API response
+ * @returns An object containing userId, token, and the API response
  */
-async function createUser(
+async function postUser(
   userName: string,
   userPassword: string
-): Promise<{
-  userId: string;
-  userName: string;
-  userPassword: string;
-  token: string;
-  apiResponse: APIResponse;
-}> {
-  const context = await request.newContext({
-    baseURL: "https://automatizando.vercel.app/"
-  });
-
-  const apiResponse: APIResponse = await context.post("api/users", {
-    data: {
-      name: userName,
-      password: userPassword
-    },
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-
-  const response = await apiResponse.json();
+): Promise<{ userId: string; token: string; apiResponse: APIResponse }> {
   
-  // Handle error responses (like 429, 400, etc.)
-  if (!apiResponse.ok() || response.error || !response.user) {
-    return {
-      userId: "",
-      userName,
-      userPassword,
-      token: "",
-      apiResponse
-    };
+  // Define the payload for user creation
+  const userPayload = {
+    name: userName,
+    password: userPassword
+  };
+
+  // Use the generic post function - no HTTP logic duplication
+  const apiResponse = await post(
+    apiConfig.baseURL,
+    apiConfig.usersPath,
+    userPayload,
+    apiConfig.headers
+  );
+
+  // Handle error responses
+  if (!apiResponse.ok()) {
+    return { userId: "", token: "", apiResponse };
   }
-  const userId = response.user.id;
+
+  // Parse response and extract user-specific data
+  const response = await apiResponse.json();
+  const userId = response.user.id.toString();
   const token = response.token;
 
-  return {
-    userId,
-    userName,
-    userPassword,
-    token,
-    apiResponse
-  };
+  return { userId, token, apiResponse };
 }
 
-export default createUser;
+export default postUser;
+

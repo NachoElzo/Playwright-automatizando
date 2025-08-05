@@ -1,4 +1,4 @@
-import { test, expect } from "../../../fixtures/test-fixtures";
+import { test, expect } from "../../../fixtures/fixtures-frontend";
 import { titles, formElements } from "../../../data/inputs-fields";
 import { InputsFields } from "../../../fixtures/index";
 import { randomValues, randomInformation} from "../../../data/random-data";

@@ -1,4 +1,4 @@
-import { test, expect } from "../../../fixtures/test-fixtures";
+import { test, expect } from "../../../fixtures/fixtures-frontend";
 import { titles, cards } from "../../../data/home-page-data";
 import { HomePage } from "../../../fixtures/index";
 

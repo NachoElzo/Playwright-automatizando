@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "pw:api": "npx playwright test tests/backend --project=api-tests",
+    "pw:frontend": "npx playwright test tests/frontend"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
